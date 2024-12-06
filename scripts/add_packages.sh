@@ -45,6 +45,7 @@ add_config "
 CONFIG_PACKAGE_nano=y
 CONFIG_PACKAGE_lm-sensors=y
 "
+# }}
 
 # {{ Add luci-app-diskman
 (cd friendlywrt && {
