@@ -60,6 +60,7 @@ CONFIG_PACKAGE_luci-app-diskman_INCLUDE_btrfs_progs=y
 CONFIG_PACKAGE_luci-app-diskman_INCLUDE_lsblk=y
 CONFIG_PACKAGE_smartmontools=y
 "
+# }}
 
 # {{ Add luci-app-openclash
 (cd friendlywrt && clone_repo https://github.com/vernesong/OpenClash.git package/luci-app-openclash)
@@ -68,6 +69,7 @@ add_config "
 # 启用 luci-app-openclash
 CONFIG_PACKAGE_luci-app-openclash=y
 "
+# }}
 
 # {{ Add luci-app-vlmcsd
 (cd friendlywrt && clone_repo https://github.com/cokebar/luci-app-vlmcsd.git package/luci-app-vlmcsd)
@@ -77,6 +79,7 @@ add_config "
 CONFIG_PACKAGE_luci-app-vlmcsd=y
 CONFIG_PACKAGE_luci-i18n-vlmcsd-zh-cn=y
 "
+# }}
 
 # {{ Add luci-theme-argon
 (cd friendlywrt/package && clone_repo https://github.com/jerrykuku/luci-theme-argon.git luci-theme-argon)
@@ -94,6 +97,7 @@ function init_theme() {
 }
 EOL
 sed -i -e '/boardname=/r /tmp/appendtext.txt' friendlywrt/target/linux/rockchip/armv8/base-files/root/setup.sh
+# }}
 
 # 将所有配置内容一次性写入目标文件
 echo "$config_contents" >> configs/rockchip/01-nanopi
