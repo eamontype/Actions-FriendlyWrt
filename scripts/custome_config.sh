@@ -7,9 +7,7 @@ sed -i -e 's/CONFIG_SDK=y/# CONFIG_SDK is not set/g' configs/rockchip/01-nanopi
 # 创建目录，如果目录不存在
 sudo mkdir -p /friendlywrt/files/etc/uci-defaults
 
-# 创建99-custom文件，并写入内容
-sudo cat <<EOF > /friendlywrt/files/etc/uci-defaults/99-custom
-#!/bin/sh
+echo "#!/bin/sh
 # 根据网卡数量配置网络
 count=0
 for iface in \$(ls /sys/class/net | grep -v lo); do
@@ -18,19 +16,16 @@ for iface in \$(ls /sys/class/net | grep -v lo); do
     count=\$((count + 1))
   fi
 done
-if [ "\$count" -eq 1 ]; then
+if [ \"\$count\" -eq 1 ]; then
     # 单个网卡，设置为 DHCP 模式
     uci set network.lan.proto='dhcp'
     uci commit network
-elif [ "\$count" -gt 1 ]; then
+elif [ \"\$count\" -gt 1 ]; then
     # 多个网卡，保持静态 IP
     uci set network.lan.ipaddr='192.168.74.1'
     uci commit network
-fi
-EOF
+fi" | sudo tee /friendlywrt/files/etc/uci-defaults/99-custom
 
-# 给文件添加可执行权限
-sudo chmod +x /friendlywrt/files/etc/uci-defaults/99-custom
 
 echo "脚本已创建并设置为可执行：/friendlywrt/files/etc/uci-defaults/99-custom"
 
