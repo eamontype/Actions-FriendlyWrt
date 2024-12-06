@@ -32,6 +32,19 @@ CONFIG_PACKAGE_ipset=y
 EOL
 # }}
 
+# {{ Add luci-app-vlmcsd
+(cd friendlywrt && {
+    [ -d package/luci-app-vlmcsd ] && rm -rf package/luci-app-vlmcsd
+    git clone https://github.com/cokebar/luci-app-vlmcsd.git package/luci-app-vlmcsd --depth 1 -b master
+})
+
+cat >> configs/rockchip/01-nanopi <<EOL
+# 启用 luci-app-vlmcsd
+CONFIG_PACKAGE_luci-app-vlmcsd=y
+CONFIG_PACKAGE_luci-i18n-vlmcsd-zh-cn=y
+EOL
+# }}
+
 # {{ Add luci-theme-argon
 (cd friendlywrt/package && {
     [ -d luci-theme-argon ] && rm -rf luci-theme-argon
