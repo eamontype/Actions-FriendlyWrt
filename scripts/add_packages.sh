@@ -26,9 +26,7 @@ EOL
 cat >> configs/rockchip/01-nanopi <<EOL
 # 启用 luci-app-openclash
 CONFIG_PACKAGE_luci-app-openclash=y
-CONFIG_PACKAGE_iptables-mod-tproxy=y
-CONFIG_PACKAGE_iptables-mod-extra=y
-CONFIG_PACKAGE_ipset=y
+CONFIG_PACKAGE_lm-sensors=y
 EOL
 # }}
 
