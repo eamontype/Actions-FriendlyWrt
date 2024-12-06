@@ -15,6 +15,23 @@ CONFIG_PACKAGE_smartmontools=y
 EOL
 # }}
 
+# {{ Add luci-app-openclash
+(cd friendlywrt && {
+    # 克隆 OpenClash 的源代码
+    [ -d package/luci-app-openclash ] && rm -rf package/luci-app-openclash
+    git clone https://github.com/vernesong/OpenClash.git package/luci-app-openclash --depth 1 -b master
+})
+
+# 修改 OpenWrt 配置文件，启用 OpenClash 插件
+cat >> configs/rockchip/01-nanopi <<EOL
+# 启用 luci-app-openclash
+CONFIG_PACKAGE_luci-app-openclash=y
+CONFIG_PACKAGE_iptables-mod-tproxy=y
+CONFIG_PACKAGE_iptables-mod-extra=y
+CONFIG_PACKAGE_ipset=y
+EOL
+# }}
+
 # {{ Add luci-theme-argon
 (cd friendlywrt/package && {
     [ -d luci-theme-argon ] && rm -rf luci-theme-argon
