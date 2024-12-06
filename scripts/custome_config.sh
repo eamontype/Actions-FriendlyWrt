@@ -8,7 +8,7 @@ sed -i -e 's/CONFIG_SDK=y/# CONFIG_SDK is not set/g' configs/rockchip/01-nanopi
 sudo mkdir -p /friendlywrt/files/etc/uci-defaults
 
 # 创建99-custom文件，并写入内容
-cat <<EOF > /friendlywrt/files/etc/uci-defaults/99-custom
+sudo cat <<EOF > /friendlywrt/files/etc/uci-defaults/99-custom
 #!/bin/sh
 # 根据网卡数量配置网络
 count=0
@@ -30,7 +30,7 @@ fi
 EOF
 
 # 给文件添加可执行权限
-chmod +x /friendlywrt/files/etc/uci-defaults/99-custom
+sudo chmod +x /friendlywrt/files/etc/uci-defaults/99-custom
 
 echo "脚本已创建并设置为可执行：/friendlywrt/files/etc/uci-defaults/99-custom"
 
