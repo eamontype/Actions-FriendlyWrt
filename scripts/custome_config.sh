@@ -4,8 +4,9 @@ sed -i -e '/CONFIG_MAKE_TOOLCHAIN=y/d' configs/rockchip/01-nanopi
 sed -i -e 's/CONFIG_IB=y/# CONFIG_IB is not set/g' configs/rockchip/01-nanopi
 sed -i -e 's/CONFIG_SDK=y/# CONFIG_SDK is not set/g' configs/rockchip/01-nanopi
 
+echo "当前目录文件夹$(ls -d */)"
 # 创建目录，如果目录不存在
-sudo mkdir -p /friendlywrt/files/etc/uci-defaults
+mkdir -p ./friendlywrt/files/etc/uci-defaults
 
 echo "#!/bin/sh
 # 根据网卡数量配置网络
@@ -24,8 +25,6 @@ elif [ \"\$count\" -gt 1 ]; then
     # 多个网卡，保持静态 IP
     uci set network.lan.ipaddr='192.168.74.1'
     uci commit network
-fi" | sudo tee /friendlywrt/files/etc/uci-defaults/99-custom
+fi" | tee ./friendlywrt/files/etc/uci-defaults/99-custom
 
-
-echo "脚本已创建并设置为可执行：/friendlywrt/files/etc/uci-defaults/99-custom"
-
+echo "脚本已创建并设置为可执行：$(cat ./friendlywrt/files/etc/uci-defaults/99-custom)"
