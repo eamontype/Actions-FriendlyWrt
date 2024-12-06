@@ -5,7 +5,7 @@ sed -i -e 's/CONFIG_IB=y/# CONFIG_IB is not set/g' configs/rockchip/01-nanopi
 sed -i -e 's/CONFIG_SDK=y/# CONFIG_SDK is not set/g' configs/rockchip/01-nanopi
 
 # 创建目录，如果目录不存在
-mkdir -p /friendlywrt/files/etc/uci-defaults
+sudo mkdir -p /friendlywrt/files/etc/uci-defaults
 
 # 创建99-custom文件，并写入内容
 cat <<EOF > /friendlywrt/files/etc/uci-defaults/99-custom
