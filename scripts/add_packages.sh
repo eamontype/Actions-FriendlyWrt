@@ -73,12 +73,16 @@ CONFIG_PACKAGE_luci-app-openclash=y
 # }}
 
 # {{ Add luci-app-vlmcsd
-(cd friendlywrt && clone_repo https://github.com/cokebar/luci-app-vlmcsd.git package/luci-app-vlmcsd)
+(cd friendlywrt && \
+clone_repo https://github.com/cokebar/luci-app-vlmcsd.git package/luci-app-vlmcsd && \ 
+clone_repo https://github.com/cokebar/openwrt-vlmcsd.git package/vlmcsd
+)
 
 add_config "
 # 启用 luci-app-vlmcsd
 CONFIG_PACKAGE_luci-app-vlmcsd=y
 CONFIG_PACKAGE_luci-i18n-vlmcsd-zh-cn=y
+CONFIG_PACKAGE_vlmcsd=y
 "
 # }}
 
