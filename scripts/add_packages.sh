@@ -2,13 +2,13 @@
 
 # 日志输出
 log() {
-    echo "[INFO] \$1"
+    echo "[INFO] $1"
 }
 
 # 下载并保存文件到指定路径
 download_file() {
-    local url=\$1
-    local dest=\$2
+    local url=$1
+    local dest=$2
     log "Downloading $url to $dest"
     if ! wget -q "$url" -O "$dest"; then
         echo "[ERROR] Failed to download $url" >&2
@@ -18,8 +18,8 @@ download_file() {
 
 # 克隆 git 仓库到指定目录
 clone_repo() {
-    local repo_url=\$1
-    local dest_dir=\$2
+    local repo_url=$1
+    local dest_dir=$2
     local branch=${3:-master}
     log "Cloning $repo_url into $dest_dir"
     if [ -d "$dest_dir" ]; then
@@ -33,7 +33,7 @@ clone_repo() {
 
 # 添加配置到指定文件
 add_config() {
-    local config_content=\$1
+    local config_content=$1
     config_contents="$config_contents$config_content"
 }
 
@@ -73,10 +73,7 @@ CONFIG_PACKAGE_luci-app-openclash=y
 # }}
 
 # {{ Add luci-app-vlmcsd
-(cd friendlywrt && \
-clone_repo https://github.com/cokebar/luci-app-vlmcsd.git package/luci-app-vlmcsd && \ 
-clone_repo https://github.com/cokebar/openwrt-vlmcsd.git package/vlmcsd
-)
+(cd friendlywrt && clone_repo https://github.com/cokebar/luci-app-vlmcsd.git package/luci-app-vlmcsd && clone_repo https://github.com/cokebar/openwrt-vlmcsd.git package/vlmcsd)
 
 add_config "
 # 启用 luci-app-vlmcsd
