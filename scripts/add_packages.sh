@@ -44,21 +44,6 @@ config_contents=""
 add_config "
 CONFIG_PACKAGE_nano=y
 CONFIG_PACKAGE_lm-sensors=y
-"
-# }}
-
-# {{ Add luci-app-diskman
-(cd friendlywrt && {
-    mkdir -p package/luci-app-diskman
-    download_file https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/applications/luci-app-diskman/Makefile package/luci-app-diskman/Makefile
-    mkdir -p package/parted
-    download_file https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/Parted.Makefile package/parted/Makefile
-})
-
-add_config "
-CONFIG_PACKAGE_luci-app-diskman=y
-CONFIG_PACKAGE_luci-app-diskman_INCLUDE_btrfs_progs=y
-CONFIG_PACKAGE_luci-app-diskman_INCLUDE_lsblk=y
 CONFIG_PACKAGE_smartmontools=y
 "
 # }}
@@ -72,14 +57,14 @@ CONFIG_PACKAGE_luci-app-openclash=y
 "
 # }}
 
-# {{ Add luci-app-vlmcsd
-(cd friendlywrt && clone_repo https://github.com/cokebar/luci-app-vlmcsd.git package/luci-app-vlmcsd && clone_repo https://github.com/cokebar/openwrt-vlmcsd.git package/vlmcsd)
+# {{ Add luci-app-tailscale
+(cd friendlywrt && clone_repo https://github.com/asvow/luci-app-tailscale.git package/luci-app-tailscale)
 
 add_config "
-# 启用 luci-app-vlmcsd
-CONFIG_PACKAGE_luci-app-vlmcsd=y
-CONFIG_PACKAGE_luci-i18n-vlmcsd-zh-cn=y
-CONFIG_PACKAGE_vlmcsd=y
+# 启用 luci-app-tailscale
+CONFIG_PACKAGE_tailscale=y
+CONFIG_PACKAGE_luci-app-tailscale=y
+CONFIG_PACKAGE_luci-i18n-tailscale-zh-cn=y
 "
 # }}
 
