@@ -48,6 +48,19 @@ CONFIG_PACKAGE_smartmontools=y
 "
 # }}
 
+# {{ Add luci-app-diskman
+(cd friendlywrt && {
+    mkdir -p package/luci-app-diskman
+    download_file https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/applications/luci-app-diskman/Makefile.old package/luci-app-diskman/Makefile
+})
+add_config "
+CONFIG_PACKAGE_luci-app-diskman=y
+CONFIG_PACKAGE_luci-app-diskman_INCLUDE_btrfs_progs=y
+CONFIG_PACKAGE_luci-app-diskman_INCLUDE_lsblk=y
+CONFIG_PACKAGE_luci-i18n-diskman-zh-cn=y
+"
+# }}
+
 # {{ Add luci-app-openclash
 (cd friendlywrt && clone_repo https://github.com/vernesong/OpenClash.git package/luci-app-openclash)
 
@@ -58,7 +71,7 @@ CONFIG_PACKAGE_luci-app-openclash=y
 # }}
 
 # {{ Add luci-app-tailscale
-(cd friendlywrt && clone_repo https://github.com/asvow/luci-app-tailscale.git package/luci-app-tailscale)
+(cd friendlywrt && clone_repo https://github.com/asvow/luci-app-tailscale.git package/luci-app-tailscale main)
 
 add_config "
 # 启用 luci-app-tailscale
