@@ -66,7 +66,6 @@ CONFIG_PACKAGE_luci-i18n-diskman-zh-cn=y
 clone_repo https://github.com/siwind/openwrt-vlmcsd.git package/vlmcsd
 clone_repo https://github.com/siwind/luci-app-vlmcsd.git package/luci-app-vlmcsd
 add_config "
-# 启用 luci-app-vlmcsd
 CONFIG_PACKAGE_vlmcsd=y
 CONFIG_PACKAGE_luci-app-vlmcsd=y
 CONFIG_PACKAGE_luci-i18n-vlmcsd-zh-cn=y
@@ -76,7 +75,6 @@ CONFIG_PACKAGE_luci-i18n-vlmcsd-zh-cn=y
 # {{ Add luci-app-openclash
 clone_repo https://github.com/vernesong/OpenClash.git package/luci-app-openclash
 add_config "
-# 启用 luci-app-openclash
 CONFIG_PACKAGE_luci-app-openclash=y
 "
 # }}
@@ -84,7 +82,6 @@ CONFIG_PACKAGE_luci-app-openclash=y
 # {{ Add luci-app-tailscale
 clone_repo https://github.com/asvow/luci-app-tailscale.git package/luci-app-tailscale main
 add_config "
-# 启用 luci-app-tailscale
 CONFIG_PACKAGE_tailscale=y
 CONFIG_PACKAGE_luci-app-tailscale=y
 CONFIG_PACKAGE_luci-i18n-tailscale-zh-cn=y
@@ -112,4 +109,4 @@ cd ../ && cat <<EOL >> configs/rockchip/01-nanopi
 $config_contents
 EOL
 
-log "$(cat configs/rockchip/01-nanopi)"
+log "$(tail -n 30 configs/rockchip/01-nanopi)"
