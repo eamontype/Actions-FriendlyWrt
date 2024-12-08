@@ -90,7 +90,9 @@ CONFIG_PACKAGE_luci-i18n-tailscale-zh-cn=y
 
 # {{ Add luci-theme-argon
 clone_repo https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
-add_config "CONFIG_PACKAGE_luci-theme-argon=y"
+add_config "
+CONFIG_PACKAGE_luci-theme-argon=y
+"
 
 sed -i -e 's/function init_theme/function old_init_theme/g' target/linux/rockchip/armv8/base-files/root/setup.sh
 cat > /tmp/appendtext.txt <<EOL
