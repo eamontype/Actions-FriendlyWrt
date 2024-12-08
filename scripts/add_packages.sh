@@ -108,6 +108,8 @@ sed -i -e '/boardname=/r /tmp/appendtext.txt' target/linux/rockchip/armv8/base-f
 # }}
 
 # 将所有配置内容一次性写入目标文件
-echo "$config_contents" >> configs/rockchip/01-nanopi
+cd ../ && cat <<EOL >> configs/rockchip/01-nanopi
+$config_contents
+EOL
 
-log "Script completed successfully."
+log "$(cat configs/rockchip/01-nanopi)"
