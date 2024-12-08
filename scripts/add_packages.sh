@@ -31,6 +31,69 @@ clone_repo() {
     fi
 }
 
+# Git稀疏克隆，只克隆指定目录到本地
+function git_sparse_clone() {
+    # 参数检查
+    if [ "$#" -lt 3 ]; then
+        echo "Usage: git_sparse_clone <branch> <repository_url> <dir1> [<dir2> ...]"
+        return 1
+    fi
+
+    local branch repourl repodir target_dirs
+    branch="$1"
+    repourl="$2"
+    shift 2
+    target_dirs=("$@")  # 保存所有目标目录
+
+    # 克隆仓库
+    git clone --depth=1 -b "$branch" --single-branch --filter=blob:none --sparse "$repourl" || {
+        echo "Error: Failed to clone repository."
+        return 1
+    }
+
+    # 提取仓库目录名
+    repodir=$(basename "$repourl" .git)
+    if [ ! -d "$repodir" ]; then
+        echo "Error: Cloned repository directory '$repodir' does not exist."
+        return 1
+    fi
+
+    # 进入仓库目录
+    cd "$repodir" || return 1
+
+    # 设置稀疏检出目标
+    git sparse-checkout init || {
+        echo "Error: Failed to initialize sparse-checkout."
+        return 1
+    }
+    git sparse-checkout set "${target_dirs[@]}" || {
+        echo "Error: Failed to sparse-checkout specified directories."
+        return 1
+    }
+
+    # 移动指定目录到上级目录
+    for dir in "${target_dirs[@]}"; do
+        if [ -d "$dir" ]; then
+            mv -f "$dir" ../package || {
+                echo "Error: Failed to move directory '$dir'."
+                return 1
+            }
+        else
+            echo "Warning: Directory '$dir' does not exist."
+        fi
+    done
+
+    # 返回上级目录并删除克隆的仓库
+    cd .. || return 1
+    rm -rf "$repodir" || {
+        echo "Warning: Failed to remove temporary repository '$repodir'."
+        return 1
+    }
+
+    echo "Sparse clone and directory move completed successfully."
+}
+
+
 # 添加配置到指定文件
 add_config() {
     local config_content=$1
@@ -73,7 +136,7 @@ CONFIG_PACKAGE_luci-i18n-vlmcsd-zh-cn=y
 # }}
 
 # {{ Add luci-app-openclash
-clone_repo https://github.com/vernesong/OpenClash.git package/luci-app-openclash
+git_sparse_clone master https://github.com/vernesong/OpenClash.git luci-app-openclash
 add_config "
 CONFIG_PACKAGE_luci-app-openclash=y
 "
@@ -111,4 +174,5 @@ cd ../ && cat <<EOL >> configs/rockchip/01-nanopi
 $config_contents
 EOL
 
+log "package目录下的文件夹$(ls -d */)"
 log "$(tail -n 30 configs/rockchip/01-nanopi)"
