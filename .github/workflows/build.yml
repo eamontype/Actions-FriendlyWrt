@@ -31,7 +31,7 @@ jobs:
     if: github.event.repository.owner.id == github.event.sender.id
     strategy:
       matrix:
-        VERSION: [23.05]
+        VERSION: [21.02, 23.05]
         SET: [docker, non-docker]
 
     steps:
@@ -141,8 +141,8 @@ jobs:
 
     strategy:
       matrix:
-        VERSION: [23.05]
-        CPU: [rk3566]
+        VERSION: [21.02, 23.05]
+        CPU: [rk3328, rk3528, rk3399, rk3566, rk3568, rk3588]
         SET: [docker, non-docker]
     steps:
     - name: Checkout
@@ -282,4 +282,3 @@ jobs:
         asset_name: ${{ steps.config.outputs.img_filename }}.gz
         tag: ${{ needs.prepare_release.outputs.release_tag }}
         overwrite: true
-
