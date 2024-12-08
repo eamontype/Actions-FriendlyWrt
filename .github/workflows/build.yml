@@ -78,7 +78,7 @@ jobs:
       run: |
         cd project
         source ../scripts/add_packages.sh
-        source ../scripts/custome_config.sh
+        source ../scripts/custom_config.sh
 
     - name: Prepare dot config and feeds
       run: |
