@@ -37,6 +37,9 @@ add_config() {
     config_contents="$config_contents$config_content"
 }
 
+# 进入 friendlywrt 目录一次
+cd friendlywrt || { echo "[ERROR] Failed to enter friendlywrt directory"; exit 1; }
+
 # 初始化配置内容变量
 config_contents=""
 
@@ -49,10 +52,8 @@ CONFIG_PACKAGE_smartmontools=y
 # }}
 
 # {{ Add luci-app-diskman
-(cd friendlywrt && {
-    mkdir -p package/luci-app-diskman
-    download_file https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/applications/luci-app-diskman/Makefile.old package/luci-app-diskman/Makefile
-})
+mkdir -p package/luci-app-diskman
+download_file https://raw.githubusercontent.com/lisaac/luci-app-diskman/master/applications/luci-app-diskman/Makefile.old package/luci-app-diskman/Makefile
 add_config "
 CONFIG_PACKAGE_luci-app-diskman=y
 CONFIG_PACKAGE_luci-app-diskman_INCLUDE_btrfs_progs=y
@@ -61,9 +62,19 @@ CONFIG_PACKAGE_luci-i18n-diskman-zh-cn=y
 "
 # }}
 
-# {{ Add luci-app-openclash
-(cd friendlywrt && clone_repo https://github.com/vernesong/OpenClash.git package/luci-app-openclash)
+# {{ Add luci-app-vlmcsd
+clone_repo https://github.com/siwind/openwrt-vlmcsd.git package/vlmcsd
+clone_repo https://github.com/siwind/luci-app-vlmcsd.git package/luci-app-vlmcsd
+add_config "
+# 启用 luci-app-vlmcsd
+CONFIG_PACKAGE_vlmcsd=y
+CONFIG_PACKAGE_luci-app-vlmcsd=y
+CONFIG_PACKAGE_luci-i18n-vlmcsd-zh-cn=y
+"
+# }}
 
+# {{ Add luci-app-openclash
+clone_repo https://github.com/vernesong/OpenClash.git package/luci-app-openclash
 add_config "
 # 启用 luci-app-openclash
 CONFIG_PACKAGE_luci-app-openclash=y
@@ -71,8 +82,7 @@ CONFIG_PACKAGE_luci-app-openclash=y
 # }}
 
 # {{ Add luci-app-tailscale
-(cd friendlywrt && clone_repo https://github.com/asvow/luci-app-tailscale.git package/luci-app-tailscale main)
-
+clone_repo https://github.com/asvow/luci-app-tailscale.git package/luci-app-tailscale main
 add_config "
 # 启用 luci-app-tailscale
 CONFIG_PACKAGE_tailscale=y
@@ -82,12 +92,10 @@ CONFIG_PACKAGE_luci-i18n-tailscale-zh-cn=y
 # }}
 
 # {{ Add luci-theme-argon
-(cd friendlywrt/package && clone_repo https://github.com/jerrykuku/luci-theme-argon.git luci-theme-argon)
-
+clone_repo https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
 add_config "CONFIG_PACKAGE_luci-theme-argon=y"
 
-sed -i -e 's/function init_theme/function old_init_theme/g' friendlywrt/target/linux/rockchip/armv8/base-files/root/setup.sh
-
+sed -i -e 's/function init_theme/function old_init_theme/g' target/linux/rockchip/armv8/base-files/root/setup.sh
 cat > /tmp/appendtext.txt <<EOL
 function init_theme() {
     if uci get luci.themes.Argon >/dev/null 2>&1; then
@@ -96,7 +104,7 @@ function init_theme() {
     fi
 }
 EOL
-sed -i -e '/boardname=/r /tmp/appendtext.txt' friendlywrt/target/linux/rockchip/armv8/base-files/root/setup.sh
+sed -i -e '/boardname=/r /tmp/appendtext.txt' target/linux/rockchip/armv8/base-files/root/setup.sh
 # }}
 
 # 将所有配置内容一次性写入目标文件
