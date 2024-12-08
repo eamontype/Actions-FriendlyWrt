@@ -174,5 +174,5 @@ cd ../ && cat <<EOL >> configs/rockchip/01-nanopi
 $config_contents
 EOL
 
-log "package目录下的文件夹$(ls -d */)"
+log "package目录下的文件夹$(find ./friendlywrt/package -mindepth 1 -maxdepth 1 -type d)"
 log "$(tail -n 30 configs/rockchip/01-nanopi)"
