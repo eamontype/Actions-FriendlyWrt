@@ -10,7 +10,7 @@
 
 - Background IP address: 192.168.74.1
 
-- the firmware download address: https://github.com/echoeamon/Actions-FriendlyWrt/releases
+- the firmware download address: https://github.com/xmasbear/Actions-FriendlyWrt/releases
 
 ### Firmware description
 

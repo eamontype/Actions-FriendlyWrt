@@ -4,7 +4,7 @@
 - 用户名：root
 - 密码：password
 - 后台IP：192.168.74.1
-- 固件下载地址： https://github.com/echoeamon/Actions-FriendlyWrt/releases
+- 固件下载地址： https://github.com/xmasbear/Actions-FriendlyWrt/releases
 ### 固件说明
 - 基于FriendlyWrt官方[Github Actions](https://github.com/friendlyarm/Actions-FriendlyWrt)
 - add_packages脚本添加常用的插件openclash、vlmcsd、tailscale等
